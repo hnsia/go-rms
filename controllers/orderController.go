@@ -142,6 +142,7 @@ func UpdateOrder() gin.HandlerFunc {
 		if err != nil {
 			msg := fmt.Sprintf("order update failed")
 			c.JSON(http.StatusInternalServerError, gin.H{"error": msg})
+			return
 		}
 		
 		c.JSON(http.StatusOK, result)
