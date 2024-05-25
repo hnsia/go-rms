@@ -2,8 +2,8 @@ package main
 
 import (
 	"go-rms/database"
-	"go-rms/middleware"
-	"go-rms/routes"
+	middleware "go-rms/middleware"
+	routes "go-rms/routes"
 	"os"
 
 	"github.com/gin-gonic/gin"

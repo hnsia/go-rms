@@ -16,8 +16,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var invoiceCollection *mongo.Collection = database.OpenCollection(database.Client, "invoice")
-
 type InvoiceViewFormat struct {
 	Invoice_id				string
 	Payment_method			string
