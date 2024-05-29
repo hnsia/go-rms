@@ -2,6 +2,7 @@ package helper
 
 import (
 	"context"
+	"fmt"
 	"go-rms/database"
 	"log"
 	"os"
@@ -88,6 +89,29 @@ func UpdateAllTokens(signedToken string, signedRefreshToken string, userId strin
 	return
 }
 
-func ValidateToken() {
+func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
+	token, err := jwt.ParseWithClaims(
+		signedToken,
+		&SignedDetails{},
+		func(token *jwt.Token) (interface{}, error) {
+			return []byte(SECRET_KEY), nil
+		},
+	)
+	
+	// token is invalid
+	claims, ok := token.Claims.(*SignedDetails)
+	if !ok {
+		msg = fmt.Sprint("token is invalid")
+		msg = err.Error()
+		return
+	}
 
+	// token is expired
+	if claims.ExpiresAt < time.Now().Local().Unix() {
+		msg = fmt.Sprint("token is expired")
+		msg = err.Error()
+		return
+	}
+
+	return claims, msg
 }
